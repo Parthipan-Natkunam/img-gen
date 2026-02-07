@@ -18,10 +18,8 @@ import (
 
 func main() {
 	promptPtr := flag.String("prompt", "", "Text prompt for image generation")
-	negPromptPtr := flag.String("negative-prompt", "", "Negative prompt")
-	widthPtr := flag.Int("width", 1024, "Image width")
-	heightPtr := flag.Int("height", 1024, "Image height")
-	modelPtr := flag.String("model", "nano-banana-pro-v1", "Model ID")
+	aspectRatioPtr := flag.String("aspect-ratio", "16:9", "Aspect ratio of the image")
+	imageSizePtr := flag.String("image-size", "2K", "Size of the image")
 	jsonPtr := flag.Bool("json", false, "Output result in JSON format")
 	describePtr := flag.Bool("describe", false, "Output tool definition JSON")
 	outputDirPtr := flag.String("output-dir", ".", "Directory to save generated images")
@@ -53,9 +51,8 @@ func main() {
 
 	ctx := context.Background()
 	opts := []generator.Option{
-		generator.WithSize(*widthPtr, *heightPtr),
-		generator.WithNegativePrompt(*negPromptPtr),
-		generator.WithModel(*modelPtr),
+		generator.WithAspectRatio(*aspectRatioPtr),
+		generator.WithImageSize(*imageSizePtr),
 	}
 
 	if *jsonPtr == false {

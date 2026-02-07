@@ -26,24 +26,15 @@ func GetToolDefinition() ToolDefinition {
 					"type":        "string",
 					"description": "The text description of the image to generate.",
 				},
-				"negative_prompt": map[string]string{
-					"type":        "string",
-					"description": "Items or concepts to exclude from the image.",
-				},
-				"width": map[string]interface{}{
-					"type":        "integer",
-					"description": "The width of the generated image.",
-					"default":     1024,
-				},
-				"height": map[string]interface{}{
-					"type":        "integer",
-					"description": "The height of the generated image.",
-					"default":     1024,
-				},
 				"aspect_ratio": map[string]interface{}{
 					"type":        "string",
 					"description": "The aspect ratio of the image (e.g., '16:9', '1:1').",
 					"enum":        []string{"1:1", "16:9", "4:3", "3:2"},
+				},
+				"image_size": map[string]interface{}{
+					"type":        "string",
+					"description": "The size of the image (e.g., '1K', '2K', '4K').",
+					"enum":        []string{"1K", "2K", "4K"},
 				},
 			},
 			Required: []string{"prompt"},
