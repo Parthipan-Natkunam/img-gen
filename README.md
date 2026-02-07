@@ -46,10 +46,8 @@ go run cmd/img-gen/main.go --prompt "A futuristic city with flying cars"
 | Flag | Description | Default |
 | :--- | :--- | :--- |
 | `--prompt` | Text prompt for image generation (Required) | |
-| `--negative-prompt` | Negative prompt to avoid certain elements | "" |
-| `--width` | Image width | 1024 |
-| `--height` | Image height | 1024 |
-| `--model` | Model ID to use | "nano-banana-pro-v1" |
+| `--aspect-ratio` | Aspect ratio of the image (e.g., '16:9', '1:1'). | "16:9" |
+| `--image-size` | Size of the image (e.g., '1K', '2K', '4K'). | "2K" |
 | `--output-dir` | Directory to save generated images | "." |
 | `--describe` | Output tool definition JSON (for integration) | false |
 | `--json` | Output result in JSON format | false |
@@ -58,7 +56,7 @@ go run cmd/img-gen/main.go --prompt "A futuristic city with flying cars"
 
 **Generate an image with specific dimensions:**
 ```bash
-go run cmd/img-gen/main.go --prompt "A cat in space" --width 512 --height 512
+go run cmd/img-gen/main.go --prompt "A cat in space" --aspect-ratio "1:1" --image-size "1K"
 ```
 
 **Save to a specific directory:**
