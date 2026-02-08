@@ -3,3 +3,4 @@ img-gen
 .env
 .env.example
 images
+.claude
