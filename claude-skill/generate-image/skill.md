@@ -13,7 +13,7 @@ Invoke this skill when the user requests:
 ## Prerequisites
 
 **IMPORTANT**: Before using this skill, verify these requirements are met:
-1. The `image-gen` tool must be installed and in the system PATH (on windows, ensure `image-gen.exe` is accessible and use `image-gen.exe` in commands)
+1. The `img-gen` tool must be installed and in the system PATH (on windows, ensure `img-gen.exe` is accessible and use `img-gen.exe` in commands)
 2. The `NANOBANANA_API_KEY` environment variable must be set
 
 If either prerequisite is missing, the skill will fail with a clear error message instructing the user how to fix it.
@@ -56,7 +56,7 @@ Use the `/generate-image` command or invoke via the Skill tool:
 
 2. **Path Creation**: If the output directory doesn't exist, it will be created automatically.
 
-3. **Project Independence**: This skill works across all projects/repositories where you have the image-gen tool installed.
+3. **Project Independence**: This skill works across all projects/repositories where you have the img-gen tool installed.
 
 4. **Error Handling**: If prerequisites are missing or parameters are invalid, you'll receive a JSON error response with clear instructions for the user.
 

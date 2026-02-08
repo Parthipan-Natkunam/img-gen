@@ -1,6 +1,6 @@
 {
   "name": "generate-image",
-  "description": "Generate images using the Nano Banana Pro API based on text prompts. PREREQUISITE: Requires image-gen tool to be installed and available in PATH. Supports various aspect ratios and image sizes. Images are saved within the current repository.",
+  "description": "Generate images using the Nano Banana Pro API based on text prompts. PREREQUISITE: Requires img-gen tool to be installed and available in PATH. Supports various aspect ratios and image sizes. Images are saved within the current repository.",
   "command": "bash",
   "args": [".claude/skills/generate-image/run.sh"],
   "input_schema": {

@@ -1,36 +1,36 @@
 #!/usr/bin/env bash
-# Image Generation Skill - Wrapper for image-gen tool
-# This script executes the image-gen tool securely with input validation
+# Image Generation Skill - Wrapper for img-gen tool
+# This script executes the img-gen tool securely with input validation
 
 set -euo pipefail
 
 # Get the current working directory (the repository where the skill is being used)
 REPO_ROOT="$(pwd)"
 
-# Check if image-gen is available in PATH
-if ! command -v image-gen &> /dev/null; then
+# Check if img-gen is available in PATH
+if ! command -v img-gen &> /dev/null; then
     cat >&2 <<'EOF'
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-ERROR: image-gen tool is not installed or not in PATH
+ERROR: img-gen tool is not installed or not in PATH
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-This skill requires the image-gen tool to be pre-installed and
+This skill requires the img-gen tool to be pre-installed and
 available in your system PATH.
 
 To install:
   1. Build the tool:
      cd /path/to/image-gen
-     go build -o image-gen ./cmd/img-gen/main.go
+     go build -o img-gen ./cmd/img-gen/main.go
 
   2. Add it to your PATH:
-     - Linux/macOS: sudo mv image-gen /usr/local/bin/
-     - Windows: Move image-gen.exe to a directory in your PATH
+     - Linux/macOS: sudo mv img-gen /usr/local/bin/
+     - Windows: Move img-gen.exe to a directory in your PATH
 
-  3. Verify: image-gen --version
+  3. Verify: img-gen --version
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
-    echo '{"status":"error","error":"image-gen tool is not installed or not in PATH. Please install it first."}' >&2
+    echo '{"status":"error","error":"img-gen tool is not installed or not in PATH. Please install it first."}' >&2
     exit 1
 fi
 
@@ -108,10 +108,10 @@ fi
 # Create output directory if it doesn't exist
 mkdir -p "$OUTPUT_DIR"
 
-# Execute the image-gen tool with sanitized inputs
+# Execute the img-gen tool with sanitized inputs
 # Use --json flag for structured output
 cd "$REPO_ROOT"
-image-gen \
+img-gen \
     --prompt "$PROMPT" \
     --aspect-ratio "$ASPECT_RATIO" \
     --image-size "$IMAGE_SIZE" \
