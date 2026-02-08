@@ -14,7 +14,22 @@ A CLI tool for generating images using AI providers (currently supporting Nano B
 - [Go](https://go.dev/dl/) installed (version 1.22+ recommended)
 - A Nano Banana Pro API Key
 
-## Setup
+## Usage
+1. Get the binary from the release.
+2. Add it to your environment PATH.
+3. Use it from your terminal or let Claude Code use it by adding the skill `generate-image` availablr in the `claude-skill` directory of this repository.
+
+### Windows
+```bash
+img-gen.exe --describe
+```
+
+### Linux
+```bash
+img-gen --describe
+```
+
+## Setup from Source
 
 1.  **Clone the repository:**
     ```bash
