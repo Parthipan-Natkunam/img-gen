@@ -42,7 +42,7 @@ func GetToolDefinition() ToolDefinition {
 				},
 				"watermark_image": map[string]string{
 					"type":        "string",
-					"description": "Optional path to an image file to use as watermark. Cannot be used with watermark_text.",
+					"description": "Optional path to an image file to use as watermark (supports PNG, JPEG, SVG). Cannot be used with watermark_text.",
 				},
 				"watermark_position": map[string]interface{}{
 					"type":        "string",

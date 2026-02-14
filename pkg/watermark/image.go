@@ -7,11 +7,76 @@ import (
 	"image/jpeg"
 	"image/png"
 	"os"
+	"path/filepath"
+	"strings"
+
+	"github.com/srwiley/oksvg"
+	"github.com/srwiley/rasterx"
 )
 
+// loadSVG loads and rasterizes an SVG file to an image.Image
+// The size parameter determines the dimensions for rasterization
+func loadSVG(path string, size int) (image.Image, error) {
+	// Read the SVG file
+	file, err := os.Open(path)
+	if err != nil {
+		return nil, fmt.Errorf("failed to open SVG file: %w", err)
+	}
+	defer file.Close()
+
+	// Parse the SVG
+	icon, err := oksvg.ReadIconStream(file)
+	if err != nil {
+		return nil, fmt.Errorf("failed to parse SVG: %w", err)
+	}
+
+	// Set a reasonable default size if not specified
+	if size <= 0 {
+		size = 512 // Default rasterization size
+	}
+
+	// Get SVG dimensions
+	svgWidth := icon.ViewBox.W
+	svgHeight := icon.ViewBox.H
+
+	// Calculate dimensions maintaining aspect ratio
+	width := size
+	height := size
+	if svgWidth > 0 && svgHeight > 0 {
+		aspectRatio := svgHeight / svgWidth
+		height = int(float64(width) * aspectRatio)
+	}
+
+	// Create the target image
+	img := image.NewRGBA(image.Rect(0, 0, width, height))
+
+	// Create a scanner and rasterizer
+	scanner := rasterx.NewScannerGV(width, height, img, img.Bounds())
+	raster := rasterx.NewDasher(width, height, scanner)
+
+	// Set the icon size and rasterize
+	icon.SetTarget(0, 0, float64(width), float64(height))
+	icon.Draw(raster, 1.0)
+
+	return img, nil
+}
+
+// isSVGFile checks if a file is an SVG based on its extension
+func isSVGFile(path string) bool {
+	ext := strings.ToLower(filepath.Ext(path))
+	return ext == ".svg"
+}
+
 // LoadWatermarkImage loads an image from a file path
-// Supports PNG and JPEG formats
+// Supports PNG, JPEG, and SVG formats
 func LoadWatermarkImage(path string) (image.Image, error) {
+	// Check if it's an SVG file
+	if isSVGFile(path) {
+		// Rasterize SVG at a reasonable default size (will be scaled later)
+		return loadSVG(path, 1024)
+	}
+
+	// Handle raster formats (PNG, JPEG)
 	file, err := os.Open(path)
 	if err != nil {
 		return nil, fmt.Errorf("failed to open watermark image: %w", err)
@@ -26,7 +91,7 @@ func LoadWatermarkImage(path string) (image.Image, error) {
 
 	// Verify format is supported
 	if format != "png" && format != "jpeg" {
-		return nil, fmt.Errorf("%w: %s (only PNG and JPEG are supported)", ErrUnsupportedFormat, format)
+		return nil, fmt.Errorf("%w: %s (only PNG, JPEG, and SVG are supported)", ErrUnsupportedFormat, format)
 	}
 
 	return img, nil
