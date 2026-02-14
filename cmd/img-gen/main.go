@@ -43,6 +43,11 @@ func main() {
 			fmt.Errorf("flags are mutually exclusive"), *jsonPtr)
 	}
 
+	// Validate watermark image file exists and is valid (before image generation)
+	if err := watermark.ValidateWatermarkImage(*watermarkImagePtr); err != nil {
+		handleError("Invalid watermark image", err, *jsonPtr)
+	}
+
 	if *describePtr {
 		jsonSchema, err := schema.GetJSON()
 		if err != nil {

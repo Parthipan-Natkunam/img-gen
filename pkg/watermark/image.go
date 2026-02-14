@@ -67,6 +67,73 @@ func isSVGFile(path string) bool {
 	return ext == ".svg"
 }
 
+// ValidateWatermarkImage validates that a watermark image file exists and has a supported format
+// This should be called before image generation to fail fast
+func ValidateWatermarkImage(path string) error {
+	if path == "" {
+		return nil // No watermark specified, nothing to validate
+	}
+
+	// Check if file exists
+	fileInfo, err := os.Stat(path)
+	if err != nil {
+		if os.IsNotExist(err) {
+			return fmt.Errorf("watermark image file not found: %s", path)
+		}
+		return fmt.Errorf("failed to access watermark image: %w", err)
+	}
+
+	// Check if it's a file (not a directory)
+	if fileInfo.IsDir() {
+		return fmt.Errorf("watermark image path is a directory, not a file: %s", path)
+	}
+
+	// Check file extension
+	ext := strings.ToLower(filepath.Ext(path))
+	validExtensions := []string{".png", ".jpg", ".jpeg", ".svg"}
+	isValid := false
+	for _, validExt := range validExtensions {
+		if ext == validExt {
+			isValid = true
+			break
+		}
+	}
+
+	if !isValid {
+		return fmt.Errorf("unsupported watermark image format: %s (supported formats: PNG, JPEG, SVG)", ext)
+	}
+
+	// For SVG files, do a quick parse check
+	if ext == ".svg" {
+		file, err := os.Open(path)
+		if err != nil {
+			return fmt.Errorf("failed to open SVG file: %w", err)
+		}
+		defer file.Close()
+
+		// Try to parse the SVG
+		_, err = oksvg.ReadIconStream(file)
+		if err != nil {
+			return fmt.Errorf("invalid SVG file: %w", err)
+		}
+	} else {
+		// For raster images, do a quick decode check
+		file, err := os.Open(path)
+		if err != nil {
+			return fmt.Errorf("failed to open image file: %w", err)
+		}
+		defer file.Close()
+
+		// Try to decode just the config (faster than full decode)
+		_, _, err = image.DecodeConfig(file)
+		if err != nil {
+			return fmt.Errorf("invalid or corrupted image file: %w", err)
+		}
+	}
+
+	return nil
+}
+
 // LoadWatermarkImage loads an image from a file path
 // Supports PNG, JPEG, and SVG formats
 func LoadWatermarkImage(path string) (image.Image, error) {
