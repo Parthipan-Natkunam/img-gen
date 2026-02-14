@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="img-gen - A powerful CLI tool for generating AI images with optional watermarking support">
+    <title>img-gen - AI Image Generation CLI Tool</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <span class="icon">🖼️</span>
+                <span class="brand-text">img-gen</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#installation">Installation</a></li>
+                <li><a href="#usage">Usage</a></li>
+                <li><a href="#watermark">Watermark</a></li>
+                <li><a href="#examples">Examples</a></li>
+                <li><a href="#cli-options">CLI Options</a></li>
+                <li><a class="btn-github" href="https://github.com/Parthipan-Natkunam/generate_image" target="_blank">GitHub</a></li>
+            </ul>
+            <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="gradient-text">img-gen</span>
+                </h1>
+                <p class="hero-subtitle">A Convenient CLI Image Generation Tool.<br>Fast. Powerful. Creative.</p>
+                <div class="terminal-demo">
+                    <div class="terminal-header">
+                        <span class="terminal-dot red"></span>
+                        <span class="terminal-dot yellow"></span>
+                        <span class="terminal-dot green"></span>
+                    </div>
+                    <div class="terminal-body">
+                        <p><span class="prompt">user@devmachine</span>:<span class="path">~/projects/img-gen$</span> <span class="command">img-gen --prompt "A futuristic city at sunset" --output-dir ./images</span></p>
+                        <div class="progress-bars">
+                            <div class="progress-bar"></div>
+                            <div class="progress-bar"></div>
+                            <div class="progress-bar"></div>
+                            <div class="progress-bar"></div>
+                        </div>
+                        <p class="success">[SUCCESS] Image generated: city.png</p>
+                    </div>
+                </div>
+                <div class="hero-badges">
+                    <span class="badge">Available on Linux, macOS, Windows.</span>
+                    <span class="badge claude-badge">
+                        <span class="claude-icon">🤖</span>
+                        Claude Code Compatible
+                    </span>
+                </div>
+                <div class="cta-buttons">
+                    <a href="https://github.com/Parthipan-Natkunam/generate_image/releases" class="btn btn-primary">Download Now</a>
+                    <a href="#installation" class="btn btn-secondary">Get Started</a>
+                    <a href="#claude" class="btn btn-claude">Use with Claude</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">✨ Features</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3>AI Image Generation</h3>
+                    <p>Generate high-quality images using Nano Banana Pro (Google Gemini)</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💧</div>
+                    <h3>Watermark Support</h3>
+                    <p>Add text or image watermarks with full customization</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔧</div>
+                    <h3>Claude Code Integration</h3>
+                    <p>Use as a skill in Claude Code</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Prerequisites Section -->
+    <section id="prerequisites" class="prerequisites">
+        <div class="container">
+            <h2 class="section-title">Prerequisites</h2>
+            <div class="prereq-grid">
+                <div class="prereq-card">
+                    <h4>Go Programming Language</h4>
+                    <p><a href="https://go.dev/dl/" target="_blank">Go</a> installed (version 1.22+ recommended)</p>
+                </div>
+                <div class="prereq-card">
+                    <h4>Google AI Studio API Key</h4>
+                    <p>A Google AI Studio API Key (<a href="https://ai.google.dev/gemini-api/docs/api-key" target="_blank">Learn How to get this</a>)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Installation Section -->
+    <section id="installation" class="installation">
+        <div class="container">
+            <h2 class="section-title">Quick Start</h2>
+            
+            <div class="install-method">
+                <h3>Installation from Release</h3>
+                <ol>
+                    <li>Download the binary from the <a href="https://github.com/Parthipan-Natkunam/generate_image/releases" target="_blank">releases page</a></li>
+                    <li>Add it to your environment PATH</li>
+                    <li>Set your API key (see below)</li>
+                </ol>
+                
+                <div class="code-tabs">
+                    <button class="tab-btn active" data-tab="windows">Windows</button>
+                    <button class="tab-btn" data-tab="linux">Linux/macOS</button>
+                </div>
+                
+                <div class="tab-content active" data-tab="windows">
+                    <pre><code>img-gen.exe --prompt "A beautiful landscape"</code></pre>
+                </div>
+                
+                <div class="tab-content" data-tab="linux">
+                    <pre><code>img-gen --prompt "A beautiful landscape"</code></pre>
+                </div>
+            </div>
+
+            <div class="install-method">
+                <h3>Build from Source</h3>
+                
+                <div class="step-card">
+                    <h4>1. Clone the repository:</h4>
+                    <pre><code>git clone https://github.com/Parthipan-Natkunam/generate_image.git
+cd generate_image</code></pre>
+                </div>
+
+                <div class="step-card">
+                    <h4>2. Install dependencies:</h4>
+                    <pre><code>go mod download</code></pre>
+                </div>
+
+                <div class="step-card">
+                    <h4>3. Build the binary:</h4>
+                    <pre><code>go build -o img-gen cmd/img-gen/main.go</code></pre>
+                </div>
+
+                <div class="step-card">
+                    <h4>4. Set the API Key:</h4>
+                    
+                    <div class="code-tabs">
+                        <button class="tab-btn active" data-tab="cmd">Windows (CMD)</button>
+                        <button class="tab-btn" data-tab="powershell">Windows (PowerShell)</button>
+                        <button class="tab-btn" data-tab="bash">Linux/macOS</button>
+                    </div>
+                    
+                    <div class="tab-content active" data-tab="cmd">
+                        <pre><code>set NANOBANANA_API_KEY=your_api_key_here</code></pre>
+                    </div>
+                    
+                    <div class="tab-content" data-tab="powershell">
+                        <pre><code>$env:NANOBANANA_API_KEY="your_api_key_here"</code></pre>
+                    </div>
+                    
+                    <div class="tab-content" data-tab="bash">
+                        <pre><code>export NANOBANANA_API_KEY=your_api_key_here</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Usage Section -->
+    <section id="usage" class="usage">
+        <div class="container">
+            <h2 class="section-title">Usage</h2>
+            
+            <div class="usage-card">
+                <h3>Basic Image Generation</h3>
+                <pre><code>img-gen --prompt "A futuristic city with flying cars"</code></pre>
+            </div>
+
+            <div class="usage-card">
+                <h3>With Custom Dimensions</h3>
+                <pre><code>img-gen --prompt "A cat in space" \
+  --aspect-ratio "1:1" \
+  --image-size "4K" \
+  --output-dir ./my-images</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- Watermark Features Section -->
+    <section id="watermark" class="watermark">
+        <div class="container">
+            <h2 class="section-title">Watermark Features</h2>
+            
+            <div class="watermark-section">
+                <h3>Text Watermarks</h3>
+                <p>Add text watermarks with full customization:</p>
+                
+                <div class="code-example">
+                    <pre><code>img-gen --prompt "A futuristic city with flying cars" \
+  --watermark-text "© 2026 MyBrand" \
+  --watermark-position "bottom-right" \
+  --watermark-opacity 0.7</code></pre>
+                </div>
+
+                <h4>With custom styling:</h4>
+                <div class="code-example">
+                    <pre><code>img-gen --prompt "A futuristic city with flying cars" \
+  --watermark-text "© 2026 MyBrand" \
+  --watermark-position "bottom-center" \
+  --watermark-text-size 32 \
+  --watermark-text-color "#FF0000" \
+  --watermark-opacity 0.8 \
+  --watermark-margin 30</code></pre>
+                </div>
+            </div>
+
+            <div class="watermark-section">
+                <h3>Image Watermarks</h3>
+                <p>Add PNG, JPEG, or SVG logos as watermarks:</p>
+                
+                <div class="code-example">
+                    <pre><code>img-gen --prompt "A futuristic city with flying cars" \
+  --watermark-image "./logo.png" \
+  --watermark-position "top-right" \
+  --watermark-scale 0.15 \
+  --watermark-opacity 0.8</code></pre>
+                </div>
+
+                <h4>SVG watermark (perfect scaling):</h4>
+                <div class="code-example">
+                    <pre><code>img-gen --prompt "A futuristic city with flying cars" \
+  --watermark-image "./logo.svg" \
+  --watermark-position "bottom-right" \
+  --watermark-scale 0.2</code></pre>
+                </div>
+            </div>
+
+            <div class="positions">
+                <h3>Position Options</h3>
+                <p>Place your watermark in any of these positions:</p>
+                <div class="position-grid">
+                    <span class="position-tag">top-left</span>
+                    <span class="position-tag">top-center</span>
+                    <span class="position-tag">top-right</span>
+                    <span class="position-tag">left-center</span>
+                    <span class="position-tag">center</span>
+                    <span class="position-tag">right-center</span>
+                    <span class="position-tag">bottom-left</span>
+                    <span class="position-tag">bottom-center</span>
+                    <span class="position-tag">bottom-right</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CLI Options Section -->
+    <section id="cli-options" class="cli-options">
+        <div class="container">
+            <h2 class="section-title">CLI Options</h2>
+            
+            <div class="options-group">
+                <h3>Image Generation</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Flag</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                                <th>Default</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>--prompt</code></td>
+                                <td>string</td>
+                                <td>Text prompt for image generation <strong>(Required)</strong></td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td><code>--aspect-ratio</code></td>
+                                <td>string</td>
+                                <td>Aspect ratio: <code>1:1</code>, <code>16:9</code>, <code>4:3</code>, <code>3:2</code></td>
+                                <td><code>16:9</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>--image-size</code></td>
+                                <td>string</td>
+                                <td>Image size: <code>1K</code>, <code>2K</code>, <code>4K</code></td>
+                                <td><code>2K</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>--output-dir</code></td>
+                                <td>string</td>
+                                <td>Directory to save generated images</td>
+                                <td><code>./generated-images</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>--json</code></td>
+                                <td>bool</td>
+                                <td>Output result in JSON format</td>
+                                <td><code>false</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>--describe</code></td>
+                                <td>bool</td>
+                                <td>Output tool definition JSON (for integration)</td>
+                                <td><code>false</code></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="options-group">
+                <h3>Watermark Options</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Flag</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                                <th>Default</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>--watermark-text</code></td>
+                                <td>string</td>
+                                <td>Text to use as watermark</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td><code>--watermark-image</code></td>
+                                <td>string</td>
+                                <td>Path to watermark image (PNG, JPEG, SVG)</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td><code>--watermark-position</code></td>
+                                <td>string</td>
+                                <td>Position on image (9 options)</td>
+                                <td><code>bottom-right</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>--watermark-opacity</code></td>
+                                <td>float</td>
+                                <td>Opacity level (0.0-1.0)</td>
+                                <td><code>0.7</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>--watermark-margin</code></td>
+                                <td>int</td>
+                                <td>Margin from edge in pixels</td>
+                                <td><code>20</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>--watermark-text-size</code></td>
+                                <td>int</td>
+                                <td>Font size for text watermark</td>
+                                <td><code>24</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>--watermark-text-color</code></td>
+                                <td>string</td>
+                                <td>Text color in hex (e.g., <code>#FFFFFF</code>)</td>
+                                <td><code>#FFFFFF</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>--watermark-scale</code></td>
+                                <td>float</td>
+                                <td>Image watermark scale (0.1-1.0)</td>
+                                <td><code>0.2</code></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="note">
+                    <strong>Important:</strong> <code>--watermark-text</code> and <code>--watermark-image</code> are mutually exclusive. Use one or the other, not both.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Examples Section -->
+    <section id="examples" class="examples">
+        <div class="container">
+            <h2 class="section-title">Examples</h2>
+            
+            <div class="example-card">
+                <h3>Generate High-Resolution Image</h3>
+                <pre><code>img-gen --prompt "Photorealistic sunset over ocean" \
+  --aspect-ratio "16:9" \
+  --image-size "4K"</code></pre>
+            </div>
+
+            <div class="example-card">
+                <h3>Square Image with Text Watermark</h3>
+                <pre><code>img-gen --prompt "Modern minimalist design" \
+  --aspect-ratio "1:1" \
+  --watermark-text "© 2026 Designer" \
+  --watermark-position "bottom-right"</code></pre>
+            </div>
+
+            <div class="example-card">
+                <h3>Product Image with Logo</h3>
+                <pre><code>img-gen --prompt "Luxury watch product photo" \
+  --aspect-ratio "4:3" \
+  --watermark-image "./brand-logo.svg" \
+  --watermark-scale 0.12 \
+  --watermark-position "top-right" \
+  --watermark-opacity 0.9</code></pre>
+            </div>
+
+            <div class="example-card">
+                <h3>Protected Content with Center Watermark</h3>
+                <pre><code>img-gen --prompt "Premium stock photo" \
+  --watermark-text "PREVIEW" \
+  --watermark-position "center" \
+  --watermark-text-size 48 \
+  --watermark-opacity 0.3</code></pre>
+            </div>
+
+            <div class="example-card">
+                <h3>Batch Generation (Script Example)</h3>
+                <pre><code>#!/bin/bash
+prompts=(
+  "Mountain landscape at dawn"
+  "Urban cityscape at night"
+  "Tropical beach paradise"
+)
+
+for prompt in "${prompts[@]}"; do
+  img-gen --prompt "$prompt" \
+    --watermark-text "© 2026 MyCollection" \
+    --watermark-position "bottom-right"
+done</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- Claude Code Integration Section -->
+    <section id="claude" class="claude-integration">
+        <div class="container">
+            <h2 class="section-title">Claude Code Integration</h2>
+            <p class="section-description">This tool includes a Claude skill for seamless integration with Claude Code.</p>
+            
+            <div class="integration-steps">
+                <div class="step-card">
+                    <h4>1. Install the skill:</h4>
+                    <pre><code># Copy the skill to your Claude skills directory
+cp -r ./claude-skill/generate-image ~/.claude/skills/</code></pre>
+                </div>
+
+                <div class="step-card">
+                    <h4>2. Use in Claude Code:</h4>
+                    <pre><code>/generate-image prompt="A futuristic robot" watermark_text="© AI Art"</code></pre>
+                </div>
+
+                <div class="step-card">
+                    <h4>3. Get tool definition:</h4>
+                    <pre><code>img-gen --describe</code></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Supported Formats Section -->
+    <section id="formats" class="formats">
+        <div class="container">
+            <h2 class="section-title">Supported Formats</h2>
+            
+            <div class="formats-grid">
+                <div class="format-card">
+                    <h3>Output Formats</h3>
+                    <ul>
+                        <li>PNG (with transparency support)</li>
+                        <li>JPEG (high quality, 95%)</li>
+                    </ul>
+                </div>
+                <div class="format-card">
+                    <h3>Watermark Formats</h3>
+                    <ul>
+                        <li><strong>PNG</strong> - Raster images with transparency</li>
+                        <li><strong>JPEG</strong> - Raster images (no transparency)</li>
+                        <li><strong>SVG</strong> - Vector graphics with perfect scaling ✨</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Troubleshooting Section -->
+    <section id="troubleshooting" class="troubleshooting">
+        <div class="container">
+            <h2 class="section-title">Troubleshooting</h2>
+            
+            <div class="trouble-card">
+                <h3>API Key Not Set</h3>
+                <pre><code>Error: NANOBANANA_API_KEY environment variable is not set</code></pre>
+                <p><strong>Solution:</strong> Set the <code>NANOBANANA_API_KEY</code> environment variable (see Setup section).</p>
+            </div>
+
+            <div class="trouble-card">
+                <h3>Watermark File Not Found</h3>
+                <pre><code>Error: watermark image file not found: logo.png</code></pre>
+                <p><strong>Solution:</strong> Check the file path is correct and the file exists.</p>
+            </div>
+
+            <div class="trouble-card">
+                <h3>Unsupported Format</h3>
+                <pre><code>Error: unsupported watermark image format: .gif</code></pre>
+                <p><strong>Solution:</strong> Use PNG, JPEG, or SVG formats for watermarks.</p>
+            </div>
+
+            <div class="trouble-card">
+                <h3>Invalid SVG</h3>
+                <pre><code>Error: invalid SVG file: [parse error]</code></pre>
+                <p><strong>Solution:</strong> Verify your SVG file is valid and well-formed.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>img-gen</h3>
+                    <p>A powerful CLI tool for generating AI images with optional watermarking support.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="https://github.com/Parthipan-Natkunam/generate_image/issues" target="_blank">🐛 Report Issues</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contributing</h3>
+                    <p>Contributions are welcome! Please feel free to submit a Pull Request.</p>
+                    <a href="https://github.com/Parthipan-Natkunam/generate_image" class="footer-link" target="_blank">View on GitHub →</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>Made with ❤️ by <a href="https://github.com/Parthipan-Natkunam" target="_blank">Parthipan</a></p>
+                <p>This project is open source and available under the MIT License.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
